@@ -1,0 +1,18 @@
+app = "final-x6dguq"
+
+[build]
+  builder = "heroku/builder:20"
+
+[processes]
+  app = "uvicorn main:app --host 0.0.0.0 --port 8080"  # Agora apontando para o main.py na raiz do projeto
+
+[[services]]
+  internal_port = 8080
+  processes = ["app"]
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
